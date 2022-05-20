@@ -1,17 +1,17 @@
 import { useState } from 'react'
 
-const Blog = ({blog, increaseLikes, removeBlog, isOwner}) => { 
+const Blog = ({ blog, increaseLikes, removeBlog, isOwner }) => {
 
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
-  const showWhenOwner = {display: isOwner ? '' : 'none'}
-  
+  const showWhenOwner = { display: isOwner ? '' : 'none' }
+
   const toggleVisibility = () => {
     setVisible(!visible)
   }
-  
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -32,8 +32,8 @@ const Blog = ({blog, increaseLikes, removeBlog, isOwner}) => {
         <p> {blog.user?.name}</p>
         <button style={showWhenOwner} onClick={removeBlog}> remove </button>
       </div>
-     
-    </div>  
+
+    </div>
   )
 }
 

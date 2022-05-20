@@ -22,30 +22,30 @@ const App = () => {
       const returned_blogs = await blogService.getAll()
       setBlogs( returned_blogs )
     }
-    
+
     fetchData()
 
   }, [])
 
-  useEffect(() => {    
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')    
-    if (loggedUserJSON) {      
-      const storedUser = JSON.parse(loggedUserJSON)      
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    if (loggedUserJSON) {
+      const storedUser = JSON.parse(loggedUserJSON)
       blogService.setToken(storedUser.token)
-      setUser(storedUser)      
-    }  
+      setUser(storedUser)
+    }
   }, [])
 
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const receivedUser = await loginService.login({username, password})
+      const receivedUser = await loginService.login({ username, password })
 
       setNotificationMessage(`you logged in as ${receivedUser.name}!`)
       setNotificationType('information')
-      setTimeout(() => {          
+      setTimeout(() => {
         setNotificationMessage(null)
-        setNotificationType(null)        
+        setNotificationType(null)
       }, 5000)
 
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(receivedUser))
@@ -57,12 +57,12 @@ const App = () => {
     catch (exception) {
       setNotificationMessage(exception.response.data.error)
       setNotificationType('error')
-      setTimeout(() => {          
+      setTimeout(() => {
         setNotificationMessage(null)
-        setNotificationType(null)        
+        setNotificationType(null)
       }, 5000)
     }
-    
+
   }
 
   const handleUsernameChange = (value) => {
@@ -77,9 +77,9 @@ const App = () => {
 
     setNotificationMessage(`user ${user.name} has logged out!`)
     setNotificationType('information')
-    setTimeout(() => {          
+    setTimeout(() => {
       setNotificationMessage(null)
-      setNotificationType(null)        
+      setNotificationType(null)
     }, 5000)
 
     window.localStorage.removeItem('loggedBlogappUser')
@@ -88,30 +88,30 @@ const App = () => {
   }
 
   const createBlog = async (newBlog) => {
-   
+
     try{
-      
+
       blogFormRef.current.toggleVisibility()
 
       const returnedBlog = await blogService.create(newBlog)
 
       setNotificationMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} has been added`)
       setNotificationType('information')
-      setTimeout(() => {          
+      setTimeout(() => {
         setNotificationMessage(null)
-        setNotificationType(null)        
+        setNotificationType(null)
       }, 5000)
 
       setBlogs(blogs.concat(returnedBlog))
-      
+
     }
     catch (exception){
 
       setNotificationMessage(exception.response.data.error)
       setNotificationType('error')
-      setTimeout(() => {          
+      setTimeout(() => {
         setNotificationMessage(null)
-        setNotificationType(null)        
+        setNotificationType(null)
       }, 5000)
 
     }
@@ -119,7 +119,7 @@ const App = () => {
   }
 
   const increaseLikes = async (id) => {
-    
+
     const blog = blogs.find(b => b.id === id)
     const changedBlog = { ...blog, likes: blog.likes+1 }
 
@@ -130,12 +130,12 @@ const App = () => {
     catch (exception){
       setNotificationMessage(exception.response.data.error)
       setNotificationType('error')
-      setTimeout(() => {          
+      setTimeout(() => {
         setNotificationMessage(null)
-        setNotificationType(null)        
+        setNotificationType(null)
       }, 5000)
     }
-    
+
   }
 
   const removeBlog = async (id) => {
@@ -143,7 +143,7 @@ const App = () => {
     const foundBlog = blogs.find((blog) => {
       return blog.id === id
     })
-    
+
     if (window.confirm(`are you sure you want to remove ${foundBlog.title} by ${foundBlog.author}?`)){
 
       try{
@@ -153,9 +153,9 @@ const App = () => {
       catch (exception){
         setNotificationMessage(exception.response.data.error)
         setNotificationType('error')
-        setTimeout(() => {          
+        setTimeout(() => {
           setNotificationMessage(null)
-          setNotificationType(null)        
+          setNotificationType(null)
         }, 5000)
       }
 
@@ -197,9 +197,9 @@ const App = () => {
       <Notification message={notificationMessage} type={notificationType} />
       <p>{user.name} logged in <button type='button' onClick={handleLogout}>log out</button></p>
       <Togglable buttonLabel = 'new blog' ref={blogFormRef}>
-      <BlogForm createBlog={createBlog}/>
+        <BlogForm createBlog={createBlog}/>
       </Togglable>
-      {displayBlogs()}    
+      {displayBlogs()}
     </div>
   )
 }
