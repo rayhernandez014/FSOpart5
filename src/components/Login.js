@@ -4,13 +4,13 @@ const Login = ({ handleLogin, password, username, handleUsernameChange, handlePa
       <form onSubmit={handleLogin}>
         <div>
           username
-          <input type="text" value={username} name="Username" onChange={({ target }) => handleUsernameChange(target.value)}/>
+          <input type="text" value={username} id="username" onChange={({ target }) => handleUsernameChange(target.value)}/>
         </div>
         <div>
           password
-          <input type="password" value={password} name="Password" onChange={({ target }) => handlePasswordChange(target.value)}/>
+          <input type="password" value={password} id="password" onChange={({ target }) => handlePasswordChange(target.value)}/>
         </div>
-        <button type="submit">login</button>
+        <button type="submit" id="login-button">login</button>
       </form>
     </>
   )
